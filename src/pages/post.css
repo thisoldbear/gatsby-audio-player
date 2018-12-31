@@ -11,6 +11,22 @@
   margin: 1rem;
 }
 
+.post-list--current {
+  position: relative;
+}
+
+.post-list--current:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 0;
+  border-color: rebeccapurple transparent transparent transparent;
+}
+
 img{
 height: 90% !important;
 }

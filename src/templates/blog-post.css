@@ -1,0 +1,12 @@
+.blog-post {
+  display: flex;
+}
+
+.blog-post__body {
+  width: 70%;
+  padding-right: 20px;
+}
+
+.blog-post__sidebar {
+  width: 30%;
+}
