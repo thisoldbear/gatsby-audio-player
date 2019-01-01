@@ -1,20 +1,29 @@
 import React from 'react'
 import Layout from '../components/layout'
 import Img from 'gatsby-image'
-import { Link, graphql } from 'gatsby'
+import { graphql } from 'gatsby'
 import classnames from 'classnames/bind'
 
 import Metatags from '../components/metatags'
+import Sidebar from '../components/sidebar'
+
 import css from './blog-post.css'
 
 const styles = classnames.bind(css)
 
-function BlogPost(props) {
+const BlogPost = (props) => {
   const post = props.data.markdownRemark
   const url = props.data.site.siteMetadata.siteUrl
-  const { title, description } = post.frontmatter
-  const thumbnail = post.frontmatter.image.childImageSharp.resize.src
-  const postList = props.data.allMarkdownRemark
+
+  const { title, description, image } = post.frontmatter
+
+  const fluidImage = image.childImageSharp.fluid
+  const thumbnail = image.childImageSharp.resize.src
+
+  const html = post.html
+
+  const postList = props.data.allMarkdownRemark.edges
+  const location = props.location.pathname
 
   return (
     <Layout>
@@ -23,27 +32,16 @@ function BlogPost(props) {
         description={description}
         thumbnail={url + thumbnail}
         url={url}
-        pathname={props.location.pathname}
+        pathname={location}
       />
       <div className={styles('blog-post')}>
         <div className={styles('blog-post__body')}>
           <h1>{title}</h1>
-          <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
-          <div dangerouslySetInnerHTML={{ __html: post.html }} />
+          <Img fluid={fluidImage} />
+          <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
         <div className={styles('blog-post__sidebar')}>
-          {postList.edges.map(({ node }, i) => (
-            <Link to={node.fields.slug} className="link" key={node.fields.slug}>
-              <div
-                className={styles('post-list', {
-                  'post-list--current': props.location.pathname === node.fields.slug,
-                })}
-              >
-                <h3>{node.frontmatter.title}</h3>
-                <span>{node.frontmatter.date}</span>
-              </div>
-            </Link>
-          ))}
+          <Sidebar posts={postList} currentLocation={location} />
         </div>
       </div>
     </Layout>

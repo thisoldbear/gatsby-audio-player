@@ -1,7 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 
-function Metatags(props) {
+const Metatags = (props) => {
   return (
     <Helmet
       title={props.title}

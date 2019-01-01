@@ -1,24 +1,21 @@
 import React from 'react'
-import { Link, graphql } from 'gatsby'
-import classnames from 'classnames/bind'
+import { graphql } from 'gatsby'
 
 import Layout from '../components/layout'
-import css from './post.css'
-
-const styles = classnames.bind(css)
+import Post from '../components/post'
 
 const IndexPage = props => {
   const postList = props.data.allMarkdownRemark
   return (
     <Layout>
       {postList.edges.map(({ node }, i) => (
-        <Link to={node.fields.slug} className={styles('link')}>
-          <div className={styles('post-list')}>
-            <h1>{node.frontmatter.title}</h1>
-            <span>{node.frontmatter.date}</span>
-            <p>{node.excerpt}</p>
-          </div>
-        </Link>
+        <Post
+          slug={node.fields.slug}
+          key={node.fields.slug}
+          title={node.frontmatter.title}
+          date={node.frontmatter.date}
+          excerpt={node.excerpt}
+        />
       ))}
     </Layout>
   )
