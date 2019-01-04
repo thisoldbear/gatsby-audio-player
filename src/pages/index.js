@@ -3,12 +3,17 @@ import { graphql } from 'gatsby'
 
 import Layout from '../components/layout'
 import Post from '../components/post'
+import SEO from '../components/seo'
 
-const IndexPage = props => {
-  const postList = props.data.allMarkdownRemark
+const IndexPage = ({
+  data: {
+    allMarkdownRemark: { edges },
+  },
+}) => {
   return (
     <Layout>
-      {postList.edges.map(({ node }, i) => (
+      <SEO title="Home" />
+      {edges.map(({ node }, i) => (
         <Post
           slug={node.fields.slug}
           key={node.fields.slug}
@@ -23,8 +28,8 @@ const IndexPage = props => {
 
 export default IndexPage
 
-export const listQuery = graphql`
-  query ListQuery {
+export const postListQuery = graphql`
+  query PostListQuery {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {

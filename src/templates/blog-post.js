@@ -51,12 +51,13 @@ const BlogPost = (props) => {
 export default BlogPost
 
 export const query = graphql`
-  query PostQuery($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+  query PostQuery($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
       frontmatter {
         title
         description
+        path
         image {
           childImageSharp {
             resize(width: 1500, height: 1500) {

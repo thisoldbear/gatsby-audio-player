@@ -1,7 +1,8 @@
 ---
-title: My third Blog post
+path: "/posts/second-post"
+title: My second Blog post
 description: This post is related to the gatsbyjs
-date: '2018-09-28'
+date: '2018-09-27'
 image: 'doge.png'
 ---
 

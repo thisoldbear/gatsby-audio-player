@@ -4,10 +4,23 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// You can delete this file if you're not using it
-
 const path = require('path')
 const { createFilePath } = require(`gatsby-source-filesystem`)
+
+/**
+ * Create pages
+ */
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `MarkdownRemark`) {
+    const slug = createFilePath({ node, getNode, basePath: `pages` })
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    })
+  }
+}
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -22,11 +35,8 @@ exports.createPages = ({ actions, graphql }) => {
           ) {
             edges {
               node {
-                fields {
-                  slug
-                }
                 frontmatter {
-                  title
+                  path
                 }
               }
             }
@@ -38,15 +48,15 @@ exports.createPages = ({ actions, graphql }) => {
           return reject(result.errors)
         }
 
-        const blogTemplate = path.resolve('./src/templates/blog-post.js')
+        const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
         result.data.allMarkdownRemark.edges.forEach(({ node }) => {
           createPage({
-            path: node.fields.slug,
-            component: blogTemplate,
+            path: node.frontmatter.path,
+            component: blogPostTemplate,
             context: {
-              slug: node.fields.slug,
-            }, // additional data can be passed via context
+              path: node.frontmatter.path,
+            },
           })
         })
 
@@ -54,16 +64,4 @@ exports.createPages = ({ actions, graphql }) => {
       })
     )
   })
-}
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({ node, getNode, basePath: `pages` })
-    createNodeField({
-      node,
-      name: `slug`,
-      value: slug,
-    })
-  }
 }

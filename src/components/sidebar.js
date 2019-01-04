@@ -7,7 +7,7 @@ import css from './sidebar.css'
 
 const styles = classnames.bind(css)
 
-const Sidebar = ({ posts, currentLocation }) => {
+const Sidebar = ({ posts }) => {
   return (
     <div className={styles('sidebar')}>
       {posts.map(({ node }, i) => (
