@@ -11,26 +11,34 @@ import css from './blog-post.css'
 
 const styles = classnames.bind(css)
 
-const BlogPost = (props) => {
-  const post = props.data.markdownRemark
-  const url = props.data.site.siteMetadata.siteUrl
-
-  const { title, description, image } = post.frontmatter
-
-  const fluidImage = image.childImageSharp.fluid
-  const thumbnail = image.childImageSharp.resize.src
-
-  const html = post.html
-
-  const pathname = props.location.pathname
-
+const BlogPost = ({
+  data: {
+    markdownRemark: {
+      frontmatter: {
+        title,
+        description,
+        image: {
+          childImageSharp: {
+            fluid: fluidImage,
+            resize: { src: thumbnailSrc },
+          },
+        },
+      },
+      html,
+    },
+    site: {
+      siteMetadata: { siteUrl },
+    },
+  },
+  location: { pathname },
+}) => {
   return (
     <Layout>
       <Metatags
         title={title}
         description={description}
-        thumbnail={url + thumbnail}
-        url={url}
+        thumbnail={siteUrl + thumbnailSrc}
+        url={siteUrl}
         pathname={pathname}
       />
       <div className={styles('blog-post')}>
