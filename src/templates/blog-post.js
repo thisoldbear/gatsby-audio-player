@@ -22,8 +22,7 @@ const BlogPost = (props) => {
 
   const html = post.html
 
-  const postList = props.data.allMarkdownRemark.edges
-  const location = props.location.pathname
+  const pathname = props.location.pathname
 
   return (
     <Layout>
@@ -32,7 +31,7 @@ const BlogPost = (props) => {
         description={description}
         thumbnail={url + thumbnail}
         url={url}
-        pathname={location}
+        pathname={pathname}
       />
       <div className={styles('blog-post')}>
         <div className={styles('blog-post__body')}>
@@ -41,7 +40,7 @@ const BlogPost = (props) => {
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
         <div className={styles('blog-post__sidebar')}>
-          <Sidebar posts={postList} currentLocation={location} />
+          <Sidebar />
         </div>
       </div>
     </Layout>
@@ -66,20 +65,6 @@ export const query = graphql`
             fluid(maxWidth: 786) {
               ...GatsbyImageSharpFluid
             }
-          }
-        }
-      }
-    }
-
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
-      edges {
-        node {
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM Do YYYY")
-            title
           }
         }
       }
