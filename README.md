@@ -1,5 +1,5 @@
-# react-gatsby-markdown
+# gatsby-audio-player
 
-Example Gatsby blog based on the [Gatsby Tutorials](https://www.gatsbyjs.org/tutorial/).
+Example Gatsby blog with persistent audio player across page changes.
 
-[Live Demo](https://quirky-austin-3f003d.netlify.com/) on [Netlify](https://www.netlify.com).
+[Live Demo](https://condescending-rosalind-ae7d34.netlify.com/) on [Netlify](https://www.netlify.com).
