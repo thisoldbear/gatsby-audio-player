@@ -10,3 +10,8 @@
 .blog-post__sidebar {
   width: 30%;
 }
+
+
+.blog-post__play-button {
+  margin-bottom: 30px;
+}

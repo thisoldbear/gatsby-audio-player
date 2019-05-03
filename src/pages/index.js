@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import Layout from '../components/layout'
 import Post from '../components/post'
 import SEO from '../components/seo'
 
@@ -11,7 +10,7 @@ const IndexPage = ({
   },
 }) => {
   return (
-    <Layout>
+    <>
       <SEO title="Home" />
       {edges.map(({ node }, i) => (
         <Post
@@ -22,7 +21,7 @@ const IndexPage = ({
           excerpt={node.excerpt}
         />
       ))}
-    </Layout>
+    </>
   )
 }
 

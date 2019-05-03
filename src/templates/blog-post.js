@@ -1,8 +1,9 @@
 import React from 'react'
-import Layout from '../components/layout'
 import Img from 'gatsby-image'
 import { graphql } from 'gatsby'
 import classnames from 'classnames/bind'
+
+import { AudioContext } from '../context/audio'
 
 import Metatags from '../components/metatags'
 import Sidebar from '../components/sidebar'
@@ -31,27 +32,36 @@ const BlogPost = ({
     },
   },
   location: { pathname },
+  ...rest
 }) => {
   return (
-    <Layout>
-      <Metatags
-        title={title}
-        description={description}
-        thumbnail={siteUrl + thumbnailSrc}
-        url={siteUrl}
-        pathname={pathname}
-      />
-      <div className={styles('blog-post')}>
-        <div className={styles('blog-post__body')}>
-          <h1>{title}</h1>
-          <Img fluid={fluidImage} />
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </div>
-        <div className={styles('blog-post__sidebar')}>
-          <Sidebar />
-        </div>
-      </div>
-    </Layout>
+    <AudioContext.Consumer>
+      {context => (
+        <>
+          <Metatags
+            title={title}
+            description={description}
+            thumbnail={siteUrl + thumbnailSrc}
+            url={siteUrl}
+            pathname={pathname}
+          />
+          {console.log(context)}
+          <div className={styles('blog-post')}>
+            <div className={styles('blog-post__body')}>
+              <h1>{title}</h1>
+              <Img fluid={fluidImage} />
+              <div dangerouslySetInnerHTML={{ __html: html }} />
+              <button className={styles('blog-post__play-button')} onClick={()=> {
+                context.setAudioSrc('https://npr-poc-fe.netlify.com/audio/track-two.mp3')
+              }}>Play Track Two</button>
+            </div>
+            <div className={styles('blog-post__sidebar')}>
+              <Sidebar />
+            </div>
+          </div>
+        </>
+      )}
+    </AudioContext.Consumer>
   )
 }
 
